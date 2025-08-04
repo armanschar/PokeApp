@@ -1,0 +1,43 @@
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h1>Mantenimiento de Regiones</h1>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="/regions/create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Crear Nueva Región
+        </a>
+    </div>
+</div>
+
+{{#if hasRegions}}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre de la Región</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each regionsList}}
+            <tr>
+                <td>{{this.name}}</td>
+                <td>
+                    <a href="/regions/edit/{{this.id}}" class="btn btn-sm btn-warning me-2">
+                        <i class="bi bi-pencil"></i> Editar
+                    </a>
+                    <a href="/regions/delete/{{this.id}}" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+{{else}}
+<div class="alert alert-info text-center">
+    <i class="bi bi-info-circle"></i>
+    No hay regiones registradas. <a href="/regions/create">Crear una nueva región</a>
+</div>
+{{/if}}

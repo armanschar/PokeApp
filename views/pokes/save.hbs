@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-md-8">
+        <h1>{{#if editMode}}Editar Pokemon{{else}}Crear Nuevo Pokemon{{/if}}</h1>
+        
+        {{#if errors}}
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                {{#each errors}}
+                <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        {{/if}}
+        
+        <form enctype="multipart/form-data" method="POST" action="{{#if editMode}}/pokes/edit{{else}}/pokes/create{{/if}}">
+            {{#if editMode}}
+            <input type="hidden" name="PokesId" value="{{poke.id}}">
+            {{/if}}
+            
+            <div class="mb-3">
+                <label for="Name" class="form-label">Nombre del Pokemon *</label>
+                <input type="text" class="form-control" id="Name" name="Name" 
+                       value="{{#if editMode}}{{poke.name}}{{else}}{{formData.Name}}{{/if}}" required="required">
+            </div>
+            
+            <div class="mb-3">
+                <label for="pokeImg" class="form-label">Imagen del Pokemon (Seleccione:) *</label>
+                <input type="file" class="form-control" id="pokeImg" name="pokeImg" 
+                       value="{{#if editMode}}{{poke.pokeimg}}{{else}}{{formData.pokeImg}}{{/if}}" 
+                       {{#if editMode}}{{else}}required="required"{{/if}}>
+            </div>
+            
+            <div class="mb-3">
+                <label for="TypeId" class="form-label">Tipo *</label>
+                {{#if hasTypes}}
+                <select class="form-select" id="TypeId" name="TypeId" required="required">
+                    <option value="">Seleccione un Tipo</option>
+                    {{#each typesList}}
+                    <option value="{{this.id}}" 
+                            {{#if ../editMode}}
+                                {{#if (eq this.id ../poke.typeId)}}selected{{/if}}
+                            {{else}}
+                                {{#if (eq this.id ../formData.TypeId)}}selected{{/if}}
+                            {{/if}}>
+                        {{this.name}}
+                    </option>
+                    {{/each}}
+                </select>
+                {{else}}
+                <div class="alert alert-warning">
+                    No hay tipos disponibles. <a href="/types/create">Crear un tipo primero</a>
+                </div>
+                {{/if}}
+            </div>
+
+            <div class="mb-3">
+                <label for="regionId" class="form-label">Región *</label>
+                {{#if hasRegions}}
+                <select class="form-select" id="regionId" name="regionId" required="required">
+                    <option value="">Seleccione una Región</option>
+                    {{#each regionsList}}
+                    <option value="{{this.id}}" 
+                            {{#if ../editMode}}
+                                {{#if (eq this.id ../poke.regionId)}}selected{{/if}}
+                            {{else}}
+                                {{#if (eq this.id ../formData.regionId)}}selected{{/if}}
+                            {{/if}}>
+                        {{this.name}}
+                    </option>
+                    {{/each}}
+                </select>
+                {{else}}
+                <div class="alert alert-warning">
+                    No hay regiones disponibles. <a href="/regions/create">Crear un región primero</a>
+                </div>
+                {{/if}}
+            </div>
+            
+            <div class="mb-3">
+                <a href="/pokes" class="btn btn-secondary me-2">
+                    <i class="bi bi-arrow-left"></i> Volver Atrás
+                </a>
+                {{#if hasTypes}}
+                    {{#if hasRegions}}
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> {{#if editMode}}Guardar Cambios{{else}}Crear Pokemon{{/if}}
+                        </button>
+                    {{/if}}    
+                {{/if}}
+            </div>
+        </form>
+    </div>
+</div>

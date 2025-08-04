@@ -1,0 +1,107 @@
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h1>Pokemones Disponibles</h1>
+    </div>
+</div>
+
+<!-- Filtro -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <form method="GET" action="/">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" 
+                       placeholder="Buscar pokemon por nombre..." 
+                       value="{{searchTerm}}">
+                <button class="btn btn-outline-primary" type="submit">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        {{#if hasTypes}}
+        <form method="GET" action="/">
+            <div class="input-group">
+                <select class="form-select" name="type">
+                    <option value="">Todos los tipos</option>
+                    {{#each typesList}}
+                    <option value="{{this.id}}" {{#if (eq this.id ../selectedType)}}selected{{/if}}>
+                        {{this.name}}
+                    </option>
+                    {{/each}}
+                </select>
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="bi bi-funnel"></i> Filtrar
+                </button>
+            </div>
+        </form>
+        {{/if}}
+        {{#if hasRegions}}
+        <form method="GET" action="/">
+            <div class="input-group mt-2">
+                <select class="form-select" name="region">
+                    <option value="">Todos las regiones</option>
+                    {{#each regionsList}}
+                    <option value="{{this.id}}" {{#if (eq this.id ../selectedRegion)}}selected{{/if}}>
+                        {{this.name}}
+                    </option>
+                    {{/each}}
+                </select>
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="bi bi-funnel"></i> Filtrar
+                </button>
+            </div>
+        </form>
+        {{/if}}
+    </div>
+</div>
+
+
+{{#if hasPokes}}
+<div class="row">
+    {{#each pokesList}}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <img src="{{this.pokeimg}}" class="card-img-top" 
+                 alt="{{this.name}}" style="height: 200px; object-fit: cover;">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{this.name}}</h5>
+                <p class="card-text">
+                    <small class="text-muted">
+                        <i class="bi bi-asterisk"></i> 
+                        {{getTypeName ../typesList this.typeId}}
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{else}}
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <i class="bi bi-info-circle"></i>
+            {{#if searchTerm}}
+                No se encontraron pokemones que coincidan con "{{searchTerm}}"
+            {{else if selectedType}}
+                No hay pokemones disponibles para el tipo seleccionado
+            {{else if selectedRegion}}
+                No hay pokemones disponibles para la región seleccionada
+            {{else}}
+                No hay pokemones disponibles. <a href="/pokes/create">Agregar un nuevo Pokemon</a>
+            {{/if}}
+        </div>
+    </div>
+</div>
+{{/if}}
+
+{{#if searchTerm}}
+<div class="row mt-3">
+    <div class="col-12">
+        <a href="/" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Ver todos los pokemones
+        </a>
+    </div>
+</div>
+{{/if}}

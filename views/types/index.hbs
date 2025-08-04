@@ -1,0 +1,43 @@
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h1>Mantenimiento de Tipos</h1>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="/types/create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Crear Nuevo Tipo
+        </a>
+    </div>
+</div>
+
+{{#if hasTypes}}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre del Tipo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each typesList}}
+            <tr>
+                <td>{{this.name}}</td>
+                <td>
+                    <a href="/types/edit/{{this.id}}" class="btn btn-sm btn-warning me-2">
+                        <i class="bi bi-pencil"></i> Editar
+                    </a>
+                    <a href="/types/delete/{{this.id}}" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+{{else}}
+<div class="alert alert-info text-center">
+    <i class="bi bi-info-circle"></i>
+    No hay tipos registrados. <a href="/types/create">Crear un nuevo tipo</a>
+</div>
+{{/if}}

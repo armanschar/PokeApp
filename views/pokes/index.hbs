@@ -1,0 +1,52 @@
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h1>Mantenimiento de Pokes</h1>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="/pokes/create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Crear Nuevo Pokemon
+        </a>
+    </div>
+</div>
+
+{{#if hasPokes}}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Región</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each pokesList}}
+            <tr>
+                <td>
+                    <img src="{{this.pokeimg}}" alt="{{this.name}}" 
+                         class="img-thumbnail" style="width: 80px; height: 60px; object-fit: cover;">
+                </td>
+                <td>{{this.name}}</td>
+                <td>{{getTypeName ../typesList this.typeId}}</td>
+                <td>{{getRegionName ../regionsList this.regionId}}</td>
+                <td>
+                    <a href="/pokes/edit/{{this.id}}" class="btn btn-sm btn-warning me-2">
+                        <i class="bi bi-pencil"></i> Editar
+                    </a>
+                    <a href="/pokes/delete/{{this.id}}" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+{{else}}
+<div class="alert alert-info text-center">
+    <i class="bi bi-info-circle"></i>
+    No hay pokemones registrados. <a href="/pokes/create">Crear un nuevo pokemon</a>
+</div>
+{{/if}}

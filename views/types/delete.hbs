@@ -1,0 +1,29 @@
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body text-center">
+                <h3 class="card-title text-danger">
+                    <i class="bi bi-exclamation-triangle"></i> Confirmar Eliminación
+                </h3>
+                
+                <p class="card-text">
+                    ¿Está seguro que desea eliminar este tipo?
+                </p>
+                
+                <div class="alert alert-info">
+                    <strong>{{type.name}}</strong>
+                </div>
+                
+                <form method="POST" action="/types/delete" class="d-inline">
+                    <input type="hidden" name="TypeId" value="{{type.id}}">
+                    <a href="/types" class="btn btn-secondary me-2">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
